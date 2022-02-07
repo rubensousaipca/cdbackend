@@ -39,7 +39,19 @@ test('Test #2 - Inserir utilizadores', () => {
 
 test('Test #3 - Inserir utilizadores sem nome', () => {
     return request(app).post('/users')
-        .send({ email: mail, password: '12345 '})
+        .send({ 
+            username: userrefresh,
+            email: mail,
+            birthday: '26/06/2000',
+            NIF: nif,
+            BI: bi,
+            gender: 'masculine',
+            address: 'Rua Alto das Laranjeiras 26',
+            zip: '4760-702',
+            location: 'Braga',
+            password: '12345',
+            admin: true,
+        })
         .then((res) => {
             expect(res.status).toBe(400);
             expect(res.body.error).toBe('Nome é um atributo obrigatório!');
@@ -48,14 +60,38 @@ test('Test #3 - Inserir utilizadores sem nome', () => {
 
 test('Test #4 - Inserir utilizador sem email', async () => {
     const result = await request(app).post('/users')
-        .send({ name: 'Ruben Sousa', password: '12345'});
+        .send({ 
+            name: 'Ruben Sousa',
+            username: userrefresh,
+            birthday: '26/06/2000',
+            NIF: nif,
+            BI: bi,
+            gender: 'masculine',
+            address: 'Rua Alto das Laranjeiras 26',
+            zip: '4760-702',
+            location: 'Braga',
+            password: '12345',
+            admin: true,
+        });
     expect(result.status).toBe(400);
     expect(result.body.error).toBe('O email é um atributo obrigatório!');
 });
 
 test('Test #5 - Inserir utilizador sem password', (done) => {
     request(app).post('/users')
-        .send({ name: 'Ruben Sousa' , email: mail})
+        .send({ 
+            name: 'Ruben Sousa',
+            username: userrefresh,
+            email: mail,
+            birthday: '26/06/2000',
+            NIF: nif,
+            BI: bi,
+            gender: 'masculine',
+            address: 'Rua Alto das Laranjeiras 26',
+            zip: '4760-702',
+            location: 'Braga',
+            admin: true,
+        })
         .then((res) => {
             expect(res.status).toBe(400);
             expect(res.body.error).toBe('A palavra-passe é um atributo obrigatório!');
@@ -168,7 +204,7 @@ test('Test #10 - Inserir utilizadores sem morada', () => {
         });
 });
 
-test('Test #10 - Inserir utilizadores sem código postal', () => {
+test('Test #11 - Inserir utilizadores sem código postal', () => {
     return request(app).post('/users')
         .send({
             name: 'Ruben Sousa',
@@ -189,7 +225,7 @@ test('Test #10 - Inserir utilizadores sem código postal', () => {
         });
 });
 
-test('Test #10 - Inserir utilizadores sem localidade', () => {
+test('Test #12 - Inserir utilizadores sem localidade', () => {
     return request(app).post('/users')
         .send({
             name: 'Ruben Sousa',
@@ -210,7 +246,7 @@ test('Test #10 - Inserir utilizadores sem localidade', () => {
         });
 });
 
-test('Test #11 - Inserir utilizadores sem opção admin', () => {
+test('Test #13 - Inserir utilizadores sem opção admin', () => {
     return request(app).post('/users')
         .send({
             name: 'Ruben Sousa',

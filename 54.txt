@@ -9,16 +9,16 @@ npm i -S -E pg install pg sem versão
 
 MIGRATIONS
 
-id
-name: 'Jose Ferreira',
-    username: userrefresh,
-    email: mail,
-    birthday: '06/09/1999',
-    NIF: nif,
-    BI: bi,
-    gender: 'masculine',
-    address: 'Rua D.Pedro V',
-    zip: '4715-422',
-    location: 'Braga',
-    password: '12345',
-    admin: true,
+
+name: 'Ruben Sousa',
+username: userrefresh,
+email: mail,
+birthday: '26/06/2000',
+NIF: nif,
+BI: bi,
+gender: 'masculine',
+address: 'Rua Alto das Laranjeiras 26',
+zip: '4760-702',
+location: 'Braga',
+password: '12345',
+admin: true,
