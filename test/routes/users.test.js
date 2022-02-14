@@ -3,6 +3,8 @@ const jwt = require('jwt-simple');
 
 const app = require('../../src/app');
 
+const MAIN_ROUTE = '/v1/users'; 
+
 const mail = `${Date.now()}@mail.pt`;
 const userrefresh = `RS${Date.now()}`;
 const nif = Date.now();
@@ -69,7 +71,7 @@ beforeAll(async () => {
 });
 
 test('Test #1 - Listar os utilizadores', () => {
-  return request(app).get('/users')
+  return request(app).get(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .then((res) => {
       expect(res.status).toBe(200);
@@ -78,7 +80,7 @@ test('Test #1 - Listar os utilizadores', () => {
 });
 
 test('Test #2 - Inserir utilizadores', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -102,7 +104,7 @@ test('Test #2 - Inserir utilizadores', () => {
 });
 
 test('Test #2.1 - Guardar a palavra passe encriptada', async () => {
-  const res = await request(app).post('/users')
+  const res = await request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({ 
       name: 'Ruben Sousa',
@@ -127,7 +129,7 @@ test('Test #2.1 - Guardar a palavra passe encriptada', async () => {
 });
 
 test('Test #3 - Inserir utilizadores sem nome', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       username: userrefresh,
@@ -149,7 +151,7 @@ test('Test #3 - Inserir utilizadores sem nome', () => {
 });
 
 test('Test #4 - Inserir utilizador sem email', async () => {
-  const result = await request(app).post('/users')
+  const result = await request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -169,7 +171,7 @@ test('Test #4 - Inserir utilizador sem email', async () => {
 });
 
 test('Test #5 - Inserir utilizador sem password', (done) => {
-  request(app).post('/users')
+  request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -192,7 +194,7 @@ test('Test #5 - Inserir utilizador sem password', (done) => {
 });
 
 test('Test #6 - Inserir utilizadores sem data de nascimento', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -214,7 +216,7 @@ test('Test #6 - Inserir utilizadores sem data de nascimento', () => {
 });
 
 test('Test #7 - Inserir utilizadores sem NIF', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -236,7 +238,7 @@ test('Test #7 - Inserir utilizadores sem NIF', () => {
 });
 
 test('Test #8 - Inserir utilizadores sem BI', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -258,7 +260,7 @@ test('Test #8 - Inserir utilizadores sem BI', () => {
 });
 
 test('Test #9 - Inserir utilizadores sem género', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -280,7 +282,7 @@ test('Test #9 - Inserir utilizadores sem género', () => {
 });
 
 test('Test #10 - Inserir utilizadores sem morada', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -302,7 +304,7 @@ test('Test #10 - Inserir utilizadores sem morada', () => {
 });
 
 test('Test #11 - Inserir utilizadores sem código postal', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -324,7 +326,7 @@ test('Test #11 - Inserir utilizadores sem código postal', () => {
 });
 
 test('Test #12 - Inserir utilizadores sem localidade', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -346,7 +348,7 @@ test('Test #12 - Inserir utilizadores sem localidade', () => {
 });
 
 test('Test #13 - Inserir utilizadores sem opção admin', () => {
-  return request(app).post('/users')
+  return request(app).post(MAIN_ROUTE)
     .set('authorization', `bearer ${users.token}`)
     .send({
       name: 'Ruben Sousa',
@@ -368,7 +370,7 @@ test('Test #13 - Inserir utilizadores sem opção admin', () => {
 });
 
 test('Test #16 - Listar user por id ', () => {
-  return request(app).get(`/users/${users.id}`)
+  return request(app).get(`${MAIN_ROUTE}/${users.id}`)
     .set('authorization', `bearer ${users.token}`)
     .then((res) => {
       expect(res.status).toBe(200);
@@ -378,7 +380,7 @@ test('Test #16 - Listar user por id ', () => {
 });
 
 test('Test #18 -Atualizar por ID', async () => {
-  return request(app).put(`/users/${users.id}`)
+  return request(app).put(`${MAIN_ROUTE}/${users.id}`)
     .set('authorization', `bearer ${users.token}`)
     .send({ name: 'Darwin Nunez' })
     .then((res) => {
@@ -388,7 +390,7 @@ test('Test #18 -Atualizar por ID', async () => {
 });
 
 test('Test #19 - Eliminar por ID', async () => {
-  return request(app).delete(`/users/${users.id}`)
+  return request(app).delete(`${MAIN_ROUTE}/${users.id}`)
     .set('authorization', `bearer ${users.token}`)
     .send({ name: 'Darwin Nunez' })
     .then((res) => {

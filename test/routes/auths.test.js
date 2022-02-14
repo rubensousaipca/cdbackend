@@ -67,7 +67,7 @@ test('Test #21 - Tentativa de autenticação com utilizador errado', () => {
 });
 
 test('Test #22 - Aceder a rotas protegidas', () => {
-  return request(app).get('/users')
+  return request(app).get('/v1/users')
     .then((res) => {
       expect(res.status).toBe(401);
     });

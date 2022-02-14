@@ -1,50 +1,55 @@
+const express = require('express');
+
 module.exports = (app) => {
-  const findAll = (req, res, next) => {
+  const router = express.Router();
+
+  router.get('/', (req, res, next) => {
     app.services.user.findAll()
       .then((result) => res.status(200).json(result))
       .catch((err) => next(err));
-  };
+  });
 
-  const create = async (req, res, next) => {
+  router.post('/', async (req, res, next) => {
     try {
       const result = await app.services.user.save(req.body);
       return res.status(201).json(result[0]);
     } catch (err) {
       return next(err);
     }
-  };
+  });
 
-  const getID = (req, res, next) => {
-    app.services.user.findOne({
-      id: req.params.id,
-    })
+  router.post('/', (req, res, next) => {
+    app.services.user.save({ ...req.body, user_id: req.user.id })
       .then((result) => {
-        res.status(200).json(result);
-      })
-      .catch((err) => next(err));
-  };
+        return res.status(201).json(result[0]);
+      }).catch((err) => {
+        next(err);
+      });
+  });
 
-  const updateID = (req, res, next) => {
+  router.get('/', (req, res, next) => {
+    app.services.user.findAll()
+      .then((result) => res.status(200).json(result))
+      .catch((err) => next(err));
+  });
+
+  router.get('/:id', (req, res, next) => {
+    app.services.user.findOne({ id: req.params.id })
+      .then((result) => { res.status(200).json(result); })
+      .catch((err) => next(err));
+  });
+
+  router.put('/:id', (req, res, next) => {
     app.services.user.update(req.params.id, req.body)
-      .then((result) => {
-        res.status(200).json(result[0]);
-      })
+      .then((result) => { res.status(200).json(result[0]); })
       .catch((err) => next(err));
-  };
+  });
 
-  const deleteID = (req, res, next) => {
+  router.delete('/:id', (req, res, next) => {
     app.services.user.remove(req.params.id)
-      .then(() => {
-        res.status(204).send();
-      })
+      .then(() => { res.status(204).send(); })
       .catch((err) => next(err));
-  };
+  });
 
-  return {
-    findAll,
-    create,
-    getID,
-    updateID,
-    deleteID,
-  };
+  return router;
 };
